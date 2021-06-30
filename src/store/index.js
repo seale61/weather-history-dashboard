@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     stations: [],
-    currentStation: null
+    currentStation: null,
+    defaultDates: {}
   },
   mutations: {
     LOAD_STATIONS: (state, data) => {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     LOAD_CURRENT_STATION: (state, data) => {
       state.currentStation = data;
     },
+    SET_DEFAULT_DATES: (state, data) => {
+      state.defaultDates = data;
+    }
   },
   actions: {
     loadStations: (context, data) => {
@@ -23,6 +27,9 @@ export default new Vuex.Store({
     loadCurrentStation: (context, data) => {
       context.commit("LOAD_CURRENT_STATION", data);
     },
+    setDefaultDates: (context, data) => {
+      context.commit("SET_DEFAULT_DATES", data);
+    }
   },
   getters: {
     
