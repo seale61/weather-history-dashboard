@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     stations: [],
     currentStation: null,
-    defaultDates: {}
+    chartDates: {}
   },
   mutations: {
     LOAD_STATIONS: (state, data) => {
@@ -16,8 +16,8 @@ export default new Vuex.Store({
     LOAD_CURRENT_STATION: (state, data) => {
       state.currentStation = data;
     },
-    SET_DEFAULT_DATES: (state, data) => {
-      state.defaultDates = data;
+    SET_CHART_DATES: (state, data) => {
+      state.chartDates = data;
     }
   },
   actions: {
@@ -25,10 +25,11 @@ export default new Vuex.Store({
       context.commit("LOAD_STATIONS", data);
     },
     loadCurrentStation: (context, data) => {
+      console.log('New current station: ', data);
       context.commit("LOAD_CURRENT_STATION", data);
     },
-    setDefaultDates: (context, data) => {
-      context.commit("SET_DEFAULT_DATES", data);
+    setChartDates: (context, data) => {
+      context.commit("SET_CHART_DATES", data);
     }
   },
   getters: {
