@@ -10,44 +10,82 @@
           <v-list-item-title class="title">
             Weather Dashboard
           </v-list-item-title>
-          <v-list-item-subtitle class="subtitle">
-            <strong>Selected cities</strong>
-          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-      <v-list
-        nav
-      >
-        <v-list-item
-          v-for="(station, index) in weatherStations"
-          :key="index"
-        >
+
+      <v-list nav>
+
+        <v-list-item link to="/" @click="drawer=!drawer">
+          <v-list-item-icon>
+            <v-icon>mdi-chart-line</v-icon>
+          </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>{{ station }}</v-list-item-title>
+            <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
-
         </v-list-item>
+
+        <v-list-item link to="/about" @click="drawer=!drawer">
+          <v-list-item-icon>
+            <v-icon>mdi-information-variant</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>About</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider />
+
+        <v-list-item @click="toggleTheme">
+          <v-list-item-icon>
+            <v-icon>{{ themeIcon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{ themeTitle }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
       </v-list>
 
-      <v-divider class="link-item d-lg-none d-xl-flex" />
-      <v-list>
-        <v-list-item>
-          <div class="link-item d-lg-none d-xl-flex" @click="toggleTheme">{{ themeTitle }}</div>
-        </v-list-item>
-      </v-list>
     </v-navigation-drawer>
 
     <v-app-bar 
       app
       color="primary"
-       class="white--text"
+      class="white--text"
     >
   
-      <v-app-bar-nav-icon class="white--text d-sm-none d-sm-flex" @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon class="white--text d-xs-none d-xs-flex" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Weather Dashboard</v-toolbar-title>
       <v-spacer />
-      <v-btn class="white--text d-none d-sm-flex" @click="toggleTheme" text rounded>{{ themeTitle }}</v-btn>
+
+      <v-btn 
+        icon 
+        class="white--text d-none d-sm-flex"
+        link to="/"
+        title="Charts/Dashboard"
+      >
+        <v-icon>mdi-chart-line</v-icon>
+      </v-btn>
+
+      <v-btn 
+        icon 
+        class="white--text d-none d-sm-flex"
+        link to="/about"
+        title="About page"
+      >
+        <v-icon>mdi-information-variant</v-icon>
+      </v-btn>
+      <v-btn 
+        icon 
+        class="white--text d-none d-sm-flex" 
+        @click="toggleTheme"
+        :title="themeTitle"  
+      >
+        <v-icon>{{ themeIcon }}</v-icon>
+      </v-btn>
+
+      <!--v-btn class="white--text d-none d-sm-flex" @click="toggleTheme" text rounded>{{ themeTitle }}</v-btn-->
     </v-app-bar>
 
     <v-main>
@@ -62,6 +100,7 @@
     data: () => ({ 
       drawer: false,
       themeTitle: 'Light Theme',
+      themeIcon: 'mdi-weather-sunny',
       weatherStations: [],
       dates: {}
     }),
@@ -76,13 +115,15 @@
         'loadStations'
       ]),
       toggleTheme() {
-        
+
         this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
 
         if(this.$vuetify.theme.dark) {
           this.themeTitle = 'Light Theme';
+          this.themeIcon = 'mdi-weather-sunny';
         } else {
           this.themeTitle = 'Dark Theme';
+          this.themeIcon = 'mdi-moon-waning-crescent';
         }
         
       },
@@ -153,4 +194,8 @@
   .link-item {
     cursor: pointer;
   }
+  .v-btn {
+    margin-right: 10px;
+  }
+
 </style>
