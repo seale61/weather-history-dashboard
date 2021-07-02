@@ -33,7 +33,7 @@ export default {
           this.getStationData();
         }
     });
-    console.log(this.currentStation, this.chartDates.start, this.chartDates.end);
+
     this.getStationData();
   },
   data() {
@@ -58,13 +58,12 @@ export default {
 
       this.chartOptions.title = `${this.currentStation} - ${this.metric}`;
       let url = `http://localhost:8081/api/get-daily/${this.chartDates.start}/${this.chartDates.end}/${this.currentStation}`;
-      console.log('URL: ', url);
 
       try {
         let results = await this.$http.get(url);
         this.processWeatherData(results.data);
       } catch(error) {
-        //console.log(error);
+        console.log(error);
       }
 
     },

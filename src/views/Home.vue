@@ -26,7 +26,7 @@
             md="4"
             style="text-align: center"
           >
-            <StationMenu class="mt-4 ml-6" />
+            <StationMenu class="mt-4 ml-6" title="Select a station location" />
           </v-col>
           <!-- End date section -->  
           </v-row>

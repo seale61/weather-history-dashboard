@@ -55,7 +55,7 @@ export default {
             let dates = null;
 
             if (this.dateLabel === 'Start Date') {
-                //alert(this.dateLabel);
+  
                 dates = {
                     start: this.dateValue,
                     end: this.chartDates.end
@@ -63,7 +63,7 @@ export default {
             } 
             
             if (this.dateLabel === 'End Date') {
-                //alert(this.dateLabel);
+
                 dates = {
                     start: this.chartDates.start,
                     end: this.dateValue
