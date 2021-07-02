@@ -25,7 +25,6 @@ export default new Vuex.Store({
       context.commit("LOAD_STATIONS", data);
     },
     loadCurrentStation: (context, data) => {
-      console.log('New current station: ', data);
       context.commit("LOAD_CURRENT_STATION", data);
     },
     setChartDates: (context, data) => {
