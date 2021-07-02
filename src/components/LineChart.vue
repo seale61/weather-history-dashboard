@@ -23,19 +23,24 @@ export default {
   computed: {
     ...mapState([ 
       'stations',
-      'currentStations',
-      'defaultDates'
+      'currentStation',
+      'chartDates'
     ]),
   },
   created() { 
-    this.getStation();
+    this.$store.subscribe((mutation) => {
+        if ((mutation.type === 'LOAD_CURRENT_STATION') || (mutation.type === 'SET_CHART_DATES')) {
+          this.getStationData();
+        }
+    });
+    console.log(this.currentStation, this.chartDates.start, this.chartDates.end);
     this.getStationData();
   },
   data() {
     return {
       chartData: [],
       chartOptions: {
-        title: `${this.station} - ${this.metric}`, 
+        title: `${this.currentStation} - ${this.metric}`, 
         curveType: 'function',
         height: 300,
         colors: [
@@ -43,27 +48,17 @@ export default {
           'blue'
         ]
       },
-      currentStation: null
     }
   },
   methods: {
-    ...mapActions([ 
-        'changeFirstLoadStatus', 
+    ...mapActions([  
         'loadWeatherData',
-        'changeFirstLoadStatus'
     ]),
     getStationData: async function() {
 
-      var station = null;
-
-      if(typeof this.station !== 'undefined') {
-        station = this.station;
-      } else {
-        station = this.currentStation;
-      }
-
-      let url = `http://localhost:8081/api/get-daily/${this.start}/${this.end}/${station}`;
-      //console.log('URL: ', url);
+      this.chartOptions.title = `${this.currentStation} - ${this.metric}`;
+      let url = `http://localhost:8081/api/get-daily/${this.chartDates.start}/${this.chartDates.end}/${this.currentStation}`;
+      console.log('URL: ', url);
 
       try {
         let results = await this.$http.get(url);
@@ -80,41 +75,24 @@ export default {
 
       for(let i = 0; i < data.length; i++) {
 
-        if(this.metric === 'temperature') {
+        if(this.metric === 'Temperature') {
           chartData[i] = [data[i].date_time, data[i].high_temp, data[i].low_temp];
         }
 
-        if(this.metric === 'humidity') {
+        if(this.metric === 'Humidity') {
           chartData[i] = [data[i].date_time, data[i].humidity_max, data[i].humidity_min];
         }
 
-        if(this.metric === 'pressure') {
+        if(this.metric === 'Pressure') {
           chartData[i] = [data[i].date_time, data[i].pressure_max, data[i].pressure_min];
         }
 
       }
       
       chartData.unshift(['Date', 'High', 'Low']);
-      //console.log('Chart Data', chartData);
       this.chartData = chartData;
 
-    },
-    getStation: async function() {
-
-        let url = `http://localhost:8081/api/get-stations`;
-        
-        let results = await this.$http.get(url);
-        results = results.data;
-    
-        let stations = [];
-
-        for(let i = 0; i < results.length; i++) {
-          stations[i] = results[i].station;
-        }
-
-        this.currentStation = stations[0];
-        
-      }
+    }
   }
 }
 </script>
