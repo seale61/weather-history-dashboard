@@ -42,7 +42,8 @@
       color="primary"
        class="white--text"
     >
-      <v-app-bar-nav-icon class="white--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
+  
+      <v-app-bar-nav-icon class="white--text d-sm-none d-sm-flex" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Weather Dashboard</v-toolbar-title>
       <v-spacer />
@@ -70,7 +71,7 @@
     },
     methods: {
       ...mapActions([ 
-        'setDefaultDates',
+        'setChartDates',
         'loadCurrentStation',
         'loadStations'
       ]),
@@ -139,7 +140,7 @@
           end:    `${end.getFullYear()}-${endMonth}-${endDay}`
         }
         
-        this.setDefaultDates(dates);
+        this.setChartDates(dates);
 
       }
     }
