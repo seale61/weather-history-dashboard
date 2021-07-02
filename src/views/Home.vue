@@ -10,31 +10,7 @@
             sm="6"
             md="4"
           >
-            <v-menu
-              v-model="startDate"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              transition="scale-transition"
-              offset-y
-              min-width="auto"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="date1"
-                  label="Start Date"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="date1"
-                no-title
-                @input="startDate = false"
-              >
-              </v-date-picker>
-            </v-menu>
+            <DatePicker :date="date1" :dateLabel="startLabel" />
           </v-col>
           <!--v-spacer /-->
           <v-col
@@ -42,31 +18,7 @@
             sm="6"
             md="4"
           >
-            <v-menu
-              v-model="endDate"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              transition="scale-transition"
-              offset-y
-              min-width="auto"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="date2"
-                  label="End Date"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="date2"
-                no-title
-                @input="endDate = false"
-              >
-              </v-date-picker>
-            </v-menu>
+            <DatePicker :date="date2" :dateLabel="endLabel" />
           </v-col>
           <v-col
             cols="12"
@@ -74,7 +26,7 @@
             md="4"
             style="text-align: center"
           >
-            <v-btn class="mt-4 ml-6 " @click="setNewDates" text rounded>Submit</v-btn>
+            <StationMenu class="mt-4 ml-6" />
           </v-col>
           <!-- End date section -->  
           </v-row>
@@ -91,8 +43,8 @@
           <LineChart 
             :station="currentStation"
             :metric="chart"
-            :start="defaultDates.start"
-            :end="defaultDates.end"
+            :start="chartDates.start"
+            :end="chartDates.end"
           />
         </v-card>
       </v-col>
@@ -102,39 +54,50 @@
 
 <script>
 
-  import { mapState } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
   import LineChart from '../components/LineChart';
+  import StationMenu from '../components/StationMenu.vue';
+  import DatePicker from '../components/DatePicker.vue';
 
   export default {
     name: 'Home', 
     components: {
       LineChart,
+      StationMenu,
+      DatePicker
     },
     computed: {
     ...mapState([ 
-      'defaultDates',
+      'chartDates',
       'stations',
+      'currentStation'
     ]),
   },
   created() {
-    this.date1 = this.defaultDates.start;
-    this.date2 = this.defaultDates.end;
+    this.date1 = this.chartDates.start;
+    this.date2 = this.chartDates.end;
   },
   data: () => ({ 
       chartTypes: [
-        'temperature',
-        'humidity',
-        'pressure',
+        'Temperature',
+        'Humidity',
+        'Pressure',
       ],
-      currentStation: 'Atlanta',
       date1: null,
       date2: null,
-      startDate: false,
-      endDate: false,
+      startLabel: 'Start Date',
+      endLabel: 'End Date'
   }),
   methods: {
+    ...mapActions([
+      'setChartDates'
+    ]),
     setNewDates: function() {
-      alert(`Start: ${this.date1}, End: ${this.date2}`);
+      let dates = {
+        start: this.date1,
+        end:  this.date2
+      }
+      this.setChartDates(dates);
     }
   }
 }
@@ -143,11 +106,5 @@
   .v-card {
     margin: auto;
     max-width: 600px !important;
-  }
-  .date-div {
-    margin: auto;
-    background-color: #FFFFFF;
-    border-radius: 0 !important;
-    padding: 5px;
   }
 </style>
