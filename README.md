@@ -14,4 +14,4 @@ A working demonstration of this web application can be found [here](https://weat
 This app also requires the installation of it's associated API (tutorial part 2) running as a service. An upcoming tutorial will be provided on how to install a node RESTful API as a service.  
 
 ## Features  
-This dashboard provides chart that display the maximum and minimum values for temperature, humidity, and atmospheric pressure for a selected city over a selected period of time. The cities that are available are based on which cities were selected for monitoring in the  
+This dashboard provides chart that display the maximum and minimum values for temperature, humidity, and atmospheric pressure for a selected city over a selected period of time. The cities that are available are based on which cities were selected for monitoring in the script created in part 1 of this series ( 
