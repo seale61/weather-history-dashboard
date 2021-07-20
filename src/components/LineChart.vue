@@ -57,7 +57,7 @@ export default {
     getStationData: async function() {
 
       this.chartOptions.title = `${this.currentStation} - ${this.metric}`;
-      let url = `http://localhost:8081/api/get-daily/${this.chartDates.start}/${this.chartDates.end}/${this.currentStation}`;
+      let url = `/app/get-daily/${this.chartDates.start}/${this.chartDates.end}/${this.currentStation}`;
 
       try {
         let results = await this.$http.get(url);

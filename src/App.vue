@@ -129,7 +129,7 @@
       },
       getStationList: async function() {
 
-        let url = `http://localhost:8081/api/get-stations`;
+        let url = `/app/get-stations`;
         
         let results = await this.$http.get(url);
         results = results.data;
