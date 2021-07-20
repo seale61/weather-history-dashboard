@@ -30,8 +30,5 @@ export default new Vuex.Store({
     setChartDates: (context, data) => {
       context.commit("SET_CHART_DATES", data);
     }
-  },
-  getters: {
-    
   }
 })
