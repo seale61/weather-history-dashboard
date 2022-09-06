@@ -4,7 +4,7 @@ This tutorial uses the OpenWeatherMap API key, databases, and data created in pa
 
 ## Framework: Vue 2 + Vuetify
 ## Demo
-A working demonstration of this web application can be found [here](https://weathertrend.sealeweb.com). This is a responsive app and works well on mobile devices.  
+A working demonstration of this web application can be found [here](https://weathertrend.infovitale.org). This is a responsive app and works well on mobile devices.  
 
 ## Installation  
     git clone https://github.com/seale61/weather-history-dashboard.git
